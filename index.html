@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>银发星球 · 有人陪，有人懂</title>
+<meta name="description" content="银发星球 —— 为老年人打造的 AI 情感陪伴 + 社群服务平台。三层服务：AI 语音陪聊、银发 AI 学习社群、人生回忆叙事。" />
+<style>
+  :root {
+    --orange-50:  #FFF8F0;
+    --orange-100: #FFF0E0;
+    --orange-200: #FFE0C0;
+    --orange-400: #FFC080;
+    --orange-500: #FF9933;
+    --orange-600: #E68A2E;
+    --orange-700: #CC7A29;
+    --sage-500:   #5C7A54;
+    --sage-600:   #4A6344;
+    --ink:        #1a1a1a;
+    --ink-soft:   #4a4a4a;
+    --line:       #E8DCC8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                 "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+    color: var(--ink);
+    background: var(--orange-50);
+    line-height: 1.7;
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--orange-600); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ===== Nav ===== */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 248, 240, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  nav .brand { font-size: 20px; font-weight: 700; color: var(--orange-700); }
+  nav .brand span { color: var(--sage-600); font-weight: 500; font-size: 16px; margin-left: 6px; }
+  nav ul { display: flex; gap: 24px; list-style: none; }
+  nav ul a { color: var(--ink-soft); font-size: 16px; }
+  @media (max-width: 640px) { nav ul { display: none; } }
+
+  /* ===== Hero ===== */
+  .hero {
+    text-align: center;
+    padding: 80px 24px 64px;
+    background: linear-gradient(180deg, var(--orange-100) 0%, var(--orange-50) 100%);
+  }
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 68px);
+    font-weight: 800;
+    color: var(--orange-700);
+    margin-bottom: 18px;
+    letter-spacing: 2px;
+  }
+  .hero .sub {
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+  }
+  .hero .cta {
+    display: inline-flex; flex-wrap: wrap; gap: 16px; justify-content: center;
+  }
+  .btn {
+    display: inline-block;
+    padding: 18px 36px;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    min-height: 60px;
+  }
+  .btn-primary {
+    background: var(--orange-500); color: white;
+    box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3);
+  }
+  .btn-primary:hover { background: var(--orange-600); text-decoration: none; transform: translateY(-2px); }
+  .btn-secondary {
+    background: white; color: var(--orange-700);
+    border: 2px solid var(--orange-500);
+  }
+  .btn-secondary:hover { background: var(--orange-100); text-decoration: none; }
+
+  /* ===== Sections ===== */
+  section { padding: 80px 24px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--orange-700);
+  }
+  .section-sub {
+    text-align: center; color: var(--ink-soft);
+    margin-bottom: 48px; font-size: 18px;
+  }
+
+  /* ===== Features ===== */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .feature-card {
+    background: white;
+    padding: 36px 28px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    border: 1px solid var(--line);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .feature-icon { font-size: 48px; margin-bottom: 16px; }
+  .feature-card h3 { color: var(--orange-700); margin-bottom: 12px; font-size: 22px; }
+  .feature-card p { color: var(--ink-soft); }
+  .feature-card .price {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 4px 12px;
+    background: var(--orange-100);
+    color: var(--orange-700);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* ===== How ===== */
+  .how-bg { background: white; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .step { text-align: center; }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px;
+    background: var(--orange-500); color: white;
+    border-radius: 50%;
+    font-size: 28px; font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .step h3 { margin-bottom: 8px; color: var(--ink); }
+  .step p { color: var(--ink-soft); }
+
+  /* ===== Pricing ===== */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .price-card {
+    background: white;
+    padding: 36px 28px;
+    border-radius: 20px;
+    border: 2px solid var(--line);
+    text-align: center;
+  }
+  .price-card.featured { border-color: var(--orange-500); position: relative; }
+  .price-card.featured::before {
+    content: "推荐"; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--orange-500); color: white;
+    padding: 4px 16px; border-radius: 12px; font-size: 14px; font-weight: 600;
+  }
+  .price-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--orange-700); }
+  .price-card .amount { font-size: 40px; font-weight: 800; color: var(--ink); margin: 16px 0; }
+  .price-card .amount small { font-size: 16px; color: var(--ink-soft); font-weight: 400; }
+  .price-card ul { list-style: none; text-align: left; margin: 20px 0; }
+  .price-card li { padding: 8px 0; color: var(--ink-soft); }
+  .price-card li::before { content: "✓ "; color: var(--sage-500); font-weight: 700; }
+
+  /* ===== Status / Roadmap ===== */
+  .status-bg { background: var(--orange-50); }
+  .status-box {
+    background: white;
+    padding: 32px;
+    border-radius: 20px;
+    border-left: 6px solid var(--orange-500);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .status-box h3 { margin-bottom: 16px; color: var(--orange-700); }
+  .status-box ol { margin-left: 20px; }
+  .status-box li { margin: 10px 0; color: var(--ink-soft); }
+
+  /* ===== Docs ===== */
+  .docs-bg { background: white; }
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .doc-link {
+    display: block;
+    padding: 16px 20px;
+    background: var(--orange-50);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+  .doc-link:hover {
+    background: var(--orange-100);
+    border-color: var(--orange-500);
+    text-decoration: none;
+    transform: translateY(-2px);
+  }
+  .doc-link .doc-num { color: var(--orange-600); font-weight: 700; margin-right: 8px; }
+  .doc-link .doc-star { color: var(--orange-500); margin-left: 4px; }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--ink);
+    color: #ccc;
+    padding: 48px 24px 32px;
+    text-align: center;
+  }
+  footer .brand { color: var(--orange-400); font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+  footer .slogan { color: white; margin-bottom: 24px; font-size: 18px; }
+  footer .links { margin: 16px 0; }
+  footer .links a { color: #ccc; margin: 0 12px; }
+  footer .tag {
+    display: inline-block; margin-top: 16px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #aaa;
+  }
+  footer .small { font-size: 13px; color: #888; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">银发星球 <span>Silver Planet</span></div>
+  <ul>
+    <li><a href="#features">服务</a></li>
+    <li><a href="#how">如何使用</a></li>
+    <li><a href="#pricing">价格</a></li>
+    <li><a href="#status">进展</a></li>
+    <li><a href="#docs">文档</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>有人陪，有人懂</h1>
+  <p class="sub">银发星球 —— 专为老年人打造的 AI 情感陪伴 + 社群服务平台</p>
+  <div class="cta">
+    <a href="#features" class="btn btn-primary">了解服务</a>
+    <a href="#status" class="btn btn-secondary">项目进展</a>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <h2>三层服务，一份温暖</h2>
+    <p class="section-sub">从陪聊到学习，从社群到回忆，覆盖银发人生全场景</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎙️</div>
+        <h3>AI 语音陪聊</h3>
+        <p>「银花」24 小时在线，陪您聊天、放老歌、讲新闻。语气温暖、节奏慢、耐心听您讲完每一个故事。</p>
+        <span class="price">免费起 · 升级 9.9 元/月</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>银发 AI 社群</h3>
+        <p>和同龄姐妹一起学手机用 AI、修老照片、做相册。每天一个小技巧，每周一个新挑战。</p>
+        <span class="price">19.9 元/月</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <h3>人生回忆叙事</h3>
+        <p>把您的一生写成一本温暖的书。专业叙事师与 AI 协作，3000-5000 字深度叙事信，送给最爱的人。</p>
+        <span class="price">980 元起</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <h3>线下互助网络</h3>
+        <p>散步、买菜、拿药、陪诊。志愿者就在您身边，需要帮忙说一声就好。</p>
+        <span class="price">5-15 元/单</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How -->
+<section id="how" class="how-bg">
+  <div class="container">
+    <h2>如何使用 · 极简三步</h2>
+    <p class="section-sub">没有复杂操作，子女帮忙点一下就能开始</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>注册</h3>
+        <p>子女帮忙注册，或者自己用手机号点一下</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>说话</h3>
+        <p>点开「银花」，按住大按钮说话，松手就发出去</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>陪伴</h3>
+        <p>想聊就聊，不想聊就放着。没有压力，没有催促</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+  <div class="container">
+    <h2>明明白白的定价</h2>
+    <p class="section-sub">没有套路，没有自动续费陷阱</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>免费体验</h3>
+        <div class="amount">¥0<small> 永久</small></div>
+        <ul>
+          <li>AI 陪聊基础功能</li>
+          <li>每天 30 分钟</li>
+          <li>紧急联络</li>
+          <li>社群浏览</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <h3>社群会员</h3>
+        <div class="amount">¥19.9<small> / 月</small></div>
+        <ul>
+          <li>AI 学习社群完整权益</li>
+          <li>AI 陪聊延长至 2 小时/天</li>
+          <li>每周教学视频</li>
+          <li>姐妹互助答疑</li>
+          <li>线下活动优先名额</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h3>人生叙事</h3>
+        <div class="amount">¥980<small> 起</small></div>
+        <ul>
+          <li>3000-5000 字深度叙事信</li>
+          <li>专业叙事师创作</li>
+          <li>老照片 AI 修复</li>
+          <li>精美 PDF 交付</li>
+          <li>家庭版 1980 元（多人合集）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Status -->
+<section id="status" class="status-bg">
+  <div class="container">
+    <h2>项目进展</h2>
+    <p class="section-sub">现在我们处于「施工图纸完成、即将动工」阶段</p>
+    <div class="status-box">
+      <h3>✅ 已完成：完整开发指令</h3>
+      <p>19 个模块化文档 + 1 份合并文档，覆盖产品、技术、运营、UX 全部维度。</p>
+      <h3 style="margin-top:24px;">🚧 进行中：交付 Claude Code 4.7 实现</h3>
+      <ol>
+        <li><strong>阶段一</strong>：项目初始化（Next.js + Prisma + 数据库）</li>
+        <li><strong>阶段二</strong>：AI 陪聊核心（银花人格 + 语音 + 紧急联络）</li>
+        <li><strong>阶段三</strong>：用户系统 + 管理后台</li>
+        <li><strong>阶段四</strong>：社群 + 订阅 + 支付</li>
+        <li><strong>阶段五</strong>：线下互助 + 人生叙事 + 公益</li>
+        <li><strong>阶段六</strong>：完善与部署上线</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Docs -->
+<section id="docs" class="docs-bg">
+  <div class="container">
+    <h2>开发文档</h2>
+    <p class="section-sub">19 个模块化文档 + FULL 合并版，直接喂给 Claude Code 即可开工</p>
+    <div class="docs-grid">
+      <a class="doc-link" href="docs/claude-code-instructions/FULL-INSTRUCTION.md"><span class="doc-num">★</span>FULL-INSTRUCTION<span class="doc-star">⭐</span></a>
+      <a class="doc-link" href="docs/claude-code-instructions/00-index.md"><span class="doc-num">00</span>总索引</a>
+      <a class="doc-link" href="docs/claude-code-instructions/01-project-overview.md"><span class="doc-num">01</span>项目总纲</a>
+      <a class="doc-link" href="docs/claude-code-instructions/02-tech-stack.md"><span class="doc-num">02</span>技术栈</a>
+      <a class="doc-link" href="docs/claude-code-instructions/03-file-structure.md"><span class="doc-num">03</span>文件结构</a>
+      <a class="doc-link" href="docs/claude-code-instructions/04-database-schema.md"><span class="doc-num">04</span>数据库 Schema</a>
+      <a class="doc-link" href="docs/claude-code-instructions/05-mvp-scope.md"><span class="doc-num">05</span>MVP 范围</a>
+      <a class="doc-link" href="docs/claude-code-instructions/06-ai-chat-core.md"><span class="doc-num">06</span>AI 陪聊核心</a>
+      <a class="doc-link" href="docs/claude-code-instructions/07-admin-backend.md"><span class="doc-num">07</span>管理后台</a>
+      <a class="doc-link" href="docs/claude-code-instructions/08-landing-page.md"><span class="doc-num">08</span>落地页</a>
+      <a class="doc-link" href="docs/claude-code-instructions/09-api-routes.md"><span class="doc-num">09</span>API 路由</a>
+      <a class="doc-link" href="docs/claude-code-instructions/10-business-logic.md"><span class="doc-num">10</span>业务逻辑</a>
+      <a class="doc-link" href="docs/claude-code-instructions/11-env-config.md"><span class="doc-num">11</span>环境变量</a>
+      <a class="doc-link" href="docs/claude-code-instructions/12-tailwind-theme.md"><span class="doc-num">12</span>Tailwind 主题</a>
+      <a class="doc-link" href="docs/claude-code-instructions/13-implementation-phases.md"><span class="doc-num">13</span>分阶段实现</a>
+      <a class="doc-link" href="docs/claude-code-instructions/14-requirements.md"><span class="doc-num">14</span>具体要求</a>
+      <a class="doc-link" href="docs/claude-code-instructions/15-yinhua-persona.md"><span class="doc-num">15</span>银花人格<span class="doc-star">⭐</span></a>
+      <a class="doc-link" href="docs/claude-code-instructions/16-narrative-product.md"><span class="doc-num">16</span>人生叙事</a>
+      <a class="doc-link" href="docs/claude-code-instructions/17-charity-integration.md"><span class="doc-num">17</span>公益集成</a>
+      <a class="doc-link" href="docs/claude-code-instructions/18-operation-playbook.md"><span class="doc-num">18</span>运营手册</a>
+      <a class="doc-link" href="docs/claude-code-instructions/19-elderly-ux-checklist.md"><span class="doc-num">19</span>适老化清单</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="brand">银发星球 · Silver Planet</div>
+  <div class="slogan">有人陪，有人懂</div>
+  <div class="links">
+    <a href="#features">服务</a>·
+    <a href="#pricing">价格</a>·
+    <a href="#status">进展</a>·
+    <a href="#docs">文档</a>·
+    <a href="https://github.com/byronwjw-ui/silverplanet" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="tag">独立公益品牌 · 不挂靠任何平台</div>
+  <div class="small">© 2025 银发星球 · 由项目主理人与人生回忆叙事师共同创办</div>
+</footer>
+
+</body>
+</html>
